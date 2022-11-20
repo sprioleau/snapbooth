@@ -2,75 +2,15 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width" ="device-width," initial-scale="1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="css/styles.css" />
 		<script src="js/script.js" type="module" defer></script>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="shortcut icon" href="assets/camera_flash_emoji.png" type="image/png" />
 		<link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet" />
-		<title>📸 Snapbooth</title>
-		<style>
-			:root {
-				--shadow: 0 0 30px rgba(0, 0, 0, 0.15), 0 10px 12px rgba(0, 0, 0, 0.2);
-			}
-
-			*,
-			*::before,
-			*::after {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
-
-			body {
-				position: relative;
-				height: 100vh;
-				overflow: hidden;
-				font-family: Mali, cursive;
-			}
-
-			button {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				border: none;
-				z-index: 1;
-				padding: 0.75rem;
-				background-color: #fff;
-				box-shadow: var(--shadow);
-				font-family: inherit;
-			}
-
-			button p {
-				padding: 0.75rem 0 0;
-				font-size: 2rem;
-			}
-
-			video {
-				max-width: 80vmin;
-			}
-
-			img {
-				display: block;
-				position: absolute;
-				left: var(--x);
-				top: var(--y);
-				transform: rotate(var(--rotation)) translate(-50%, -50%) scale(var(--scale));
-				padding: 1rem;
-				padding-bottom: 4rem;
-				background-color: #fff;
-				box-shadow: var(--shadow);
-			}
-
-			canvas {
-				display: none;
-			}
-		</style>
+		<link rel="stylesheet" href="styles/style.css" />
+		<title>Snapbooth</title>
 	</head>
 	<body>
 		<canvas></canvas>
@@ -78,52 +18,5 @@
 			<video playsinline muted autoplay></video>
 			<p>Smile!</p>
 		</button>
-		<script type="module">
-			const video = document.querySelector("video");
-			const canvas = document.querySelector("canvas");
-			const button = document.querySelector("button");
-			const ctx = canvas.getContext("2d");
-			let images = [];
-			const videoScale = 0.8;
-			const MAX_PICTURES = 100;
-			const picturesPerSecond = 10;
-
-			const stream = await navigator.mediaDevices.getUserMedia({
-				video: true,
-				audio: false,
-			});
-
-			video.srcObject = stream;
-
-			function takePicture() {
-				[canvas.width, canvas.height] = [video.videoWidth * videoScale, video.videoHeight * videoScale];
-				ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-				const image = document.createElement("img");
-				image.src = canvas.toDataURL("image/jpg");
-				image.style = `
-         --rotation: ${Math.random() * 360}deg;
-         --scale: ${Math.random() * 0.75 + 0.45};
-         --x: ${Math.random() * innerWidth}px;
-         --y: ${Math.random() * innerHeight}px;`;
-
-				image.onload = () => {
-					images.push(image);
-
-					if (images.length > MAX_PICTURES) {
-						clearInterval(interval);
-						stream.getTracks().forEach(function (track) {
-							track.stop();
-						});
-						button.style.display = "none";
-						button.style.pointerEvents = "none";
-					} else {
-						document.body.appendChild(image);
-					}
-				};
-			}
-
-			button.addEventListener("click", takePicture);
-			const interval = setInterval(takePicture, 1000 / picturesPerSecond);
-		</script>
 	</body>
 </html>
