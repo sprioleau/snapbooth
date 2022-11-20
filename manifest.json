@@ -1,0 +1,28 @@
+{
+  "background_color": "#f0fff0",
+  "description": "A photoshoot featuring you!",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "sizes": "512x512",
+      "src": "/images/logo_512px.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "192x192",
+      "src": "/images/logo_192px.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "512x512",
+      "src": "/images/logo_512px.png",
+      "type": "image/png"
+    }
+  ],
+  "id": "/",
+  "name": "📸 Snapbooth",
+  "short_name": "📸 Snapbooth",
+  "start_url": "/",
+  "orientation": "portrait",
+  "theme_color": "#f0fff0"
+}
