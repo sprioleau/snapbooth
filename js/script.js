@@ -15,7 +15,7 @@ const MAX_PICTURES = 50;
 const picturesPerSecond = 10;
 
 const mediaConfig = {
-	video: true,
+	video: { width: 1280, height: 720 },
 	audio: false,
 };
 
@@ -38,6 +38,7 @@ function takePicture() {
     videoWrapper.style.background = `url(${imageElements[imageElements.length - 1].src})`;
     videoWrapper.style.backgroundRepeat = "no-repeat";
     videoWrapper.style.backgroundSize = "cover";
+		videoWrapper.style.backgroundPosition = "center";
     imagesCarousel.style.display = "flex";
     video.style.opacity = 0;
 		message.innerText = "Click or tap to snap again!";
@@ -60,7 +61,7 @@ function takePicture() {
     imagesWrapper.appendChild(image);
     const copy = image.cloneNode();
     const imageLink = document.createElement("a");
-    imageLink.download = `snapbooth_photo_${Date.now() + "_" + imageElements.length}.jpg`;
+    imageLink.download = `snapbooth_photo_${Date.now() + "_" + imageElements.length}.png`;
     imageLink.href = copy.src;
     copy.style = undefined;
     imageLink.appendChild(copy);
